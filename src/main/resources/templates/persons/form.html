@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Заголовок</title>
+</head>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<h1 th:text="${person.id == null} ? 'Новый пользователь' : 'Редактировать'"></h1>
+
+<form th:action="${person.id == null} ? @{/persons} : @{/persons/{id}/edit(id=${person.id})}"
+      th:object="${person}"
+      method="post">
+
+    <label>Имя</label>
+    <input type="text" th:field="*{name}" placeholder="Введите имя" />
+    <span th:if="${#fields.hasErrors('name')}"
+          th:errors="*{name}"
+          style="color:red">
+    </span>
+
+    <button type="submit">Сохранить</button>
+    <a th:href="@{/persons}">Отмена</a>
+</form>
+</body>
+</html>
