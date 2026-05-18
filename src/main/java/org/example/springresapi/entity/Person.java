@@ -3,11 +3,16 @@ package org.example.springresapi.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import org.example.springresapi.dto.PersonDTO;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 
 @Entity
-
-public class Person extends PersonDTO {
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+public class Person  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,7 +22,7 @@ public class Person extends PersonDTO {
     @Size(max = 100, message = "Имя не более 100 символов")
     private String name;
 
-    public void Person(String name) {
+    public Person(String name) {
         this.name = name;
 
     }

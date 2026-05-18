@@ -1,22 +1,23 @@
 package org.example.springresapi.controller;
 
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
-import org.example.springresapi.entity.Person;
+import org.example.springresapi.dto.PersonDTO;
 import org.example.springresapi.service.PersonService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @Controller
-@RequestMapping("/api/v1")
-@AllArgsConstructor
+@RequestMapping("/person")
 public class PersonController {
 
     private final PersonService service;
+
+    public PersonController(PersonService service) {
+        this.service = service;
+    }
 
     @GetMapping
     public String list(Model model) {
@@ -26,7 +27,7 @@ public class PersonController {
 
     @GetMapping("/{id}")
     public String view(@PathVariable Long id, Model model) {
-        Person person = service.findById(id)
+        PersonDTO person = service.findById(id)
                 .orElse(null);
         if (person == null) return "redirect:/persons";
         model.addAttribute("person", person);
@@ -35,12 +36,12 @@ public class PersonController {
 
     @GetMapping("/new")
     public String newForm(Model model) {
-        model.addAttribute("person", new Person());
+        model.addAttribute("person", new PersonDTO());
         return "persons/form";
     }
 
     @PostMapping
-    public String create(@Valid @ModelAttribute Person person,
+    public String create(@Valid @ModelAttribute PersonDTO person,
                          BindingResult result) {
         if (result.hasErrors()) return "persons/form";
         service.save(person);
@@ -49,7 +50,7 @@ public class PersonController {
 
     @GetMapping("/{id}/edit")
     public String editForm(@PathVariable Long id, Model model) {
-        Person person = service.findById(id)
+        PersonDTO person = service.findById(id)
                 .orElse(null);
         if (person == null) return "redirect:/persons";
         model.addAttribute("person", person);
@@ -58,7 +59,7 @@ public class PersonController {
 
     @PostMapping("/{id}/edit")
     public String update(@PathVariable Long id,
-                         @Valid @ModelAttribute Person person,
+                         @Valid @ModelAttribute PersonDTO person,
                          BindingResult result) {
         if (result.hasErrors()) return "persons/form";
         person.setId(id);
@@ -71,9 +72,8 @@ public class PersonController {
         service.deleteById(id);
         return "redirect:/persons";
     }
+
+
 }
 
-  /*  private ResponseEntity<PersonDTO> mappingResponsePerson(PersonDTO person) {
-        return new ResponseEntity<>(person, HttpStatus.OK);
-    }*/
 
