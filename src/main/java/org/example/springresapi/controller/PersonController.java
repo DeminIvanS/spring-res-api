@@ -72,8 +72,6 @@ public class PersonController {
         service.deleteById(id);
         return "redirect:/persons";
     }
-
-
 }
 
 
