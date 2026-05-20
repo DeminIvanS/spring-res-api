@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Просмотр человека</title>
+</head>
+<body>
+
+<h1>Информация о человеке</h1>
+
+<ul>
+    <li><strong>ID:</strong> <span th:text="${person.id}">1</span></li>
+    <li><strong>Имя:</strong> <span th:text="${person.name}">Имя</span></li>
+</ul>
+
+<br>
+<!-- Кнопка возврата к общему списку -->
+<a th:href="@{/persons}">
+    <button type="button">Back to list</button>
+</a>
+
+</body>
+</html>
