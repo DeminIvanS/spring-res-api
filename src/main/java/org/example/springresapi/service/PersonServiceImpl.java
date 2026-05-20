@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class PersonServiceImpl implements PersonService{
+public class PersonServiceImpl implements PersonService {
 
     private final PersonRepository repository;
 
@@ -39,7 +39,7 @@ public class PersonServiceImpl implements PersonService{
 
     @Override
     public Optional<PersonDTO> update(PersonDTO personDTO) {
-        if(findById(personDTO.getId()).isEmpty()){
+        if (findById(personDTO.getId()).isEmpty()) {
             throw new RuntimeException();
         }
         Person person = repository.save(new Person(personDTO.getId(), personDTO.getName()));
@@ -48,7 +48,7 @@ public class PersonServiceImpl implements PersonService{
 
     @Override
     public boolean deleteById(Long id) {
-        if(findById(id).isEmpty()){
+        if (findById(id).isEmpty()) {
             return false;
         }
         repository.deleteById(id);
