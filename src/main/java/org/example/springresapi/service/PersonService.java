@@ -9,7 +9,7 @@ public interface PersonService {
 
     List<PersonDTO> findAll();
 
-    Optional<PersonDTO> save(PersonDTO personDTO);
+    PersonDTO save(PersonDTO personDTO);
 
     Optional<PersonDTO> findById(Long id);
 

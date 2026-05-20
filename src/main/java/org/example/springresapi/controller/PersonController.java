@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @Controller
-@RequestMapping("/person")
+@RequestMapping("/persons")
 public class PersonController {
 
     private final PersonService service;

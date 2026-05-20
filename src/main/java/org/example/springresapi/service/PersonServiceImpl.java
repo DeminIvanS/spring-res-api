@@ -26,9 +26,9 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public Optional<PersonDTO> save(PersonDTO personDTO) {
+    public PersonDTO save(PersonDTO personDTO) {
         Person person = repository.save(new Person(personDTO.getName()));
-        return Optional.of(new PersonDTO(person.getId(), person.getName()));
+        return new PersonDTO(person.getId(), person.getName());
     }
 
     @Override
