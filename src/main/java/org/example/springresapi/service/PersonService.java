@@ -11,9 +11,9 @@ public interface PersonService {
 
     PersonDTO save(PersonDTO personDTO);
 
-    Optional<PersonDTO> findById(Long id);
+    PersonDTO findById(Long id);
 
-    Optional<PersonDTO> update(PersonDTO personDTO);
+    PersonDTO update(PersonDTO personDTO);
 
-    boolean deleteById(Long id);
+    void deleteById(Long id);
 }

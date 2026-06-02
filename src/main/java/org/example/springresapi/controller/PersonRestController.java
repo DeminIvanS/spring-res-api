@@ -29,10 +29,8 @@ public class PersonRestController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PersonDTO> view(@PathVariable Long id) {
-        return service.findById(id)
-                .map(person -> ResponseEntity.ok(person))
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public PersonDTO view(@PathVariable Long id) {
+        return service.findById(id);
     }
 
     @PostMapping
@@ -45,19 +43,14 @@ public class PersonRestController {
     @PutMapping("/{id}")
     public ResponseEntity<PersonDTO> update(@PathVariable Long id,
                                             @Valid @RequestBody PersonDTO personDTO) {
-        if (!service.findById(id).isPresent()) {
-            return ResponseEntity.notFound().build();
-        }
         personDTO.setId(id);
-        PersonDTO updatedPerson = service.save(personDTO);
-        return ResponseEntity.ok(updatedPerson);
+        PersonDTO updatePerson = service.update(personDTO);
+        return ResponseEntity.ok(updatePerson);
+
     }
 
     @PostMapping("/{id}/delete")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        if (!service.findById(id).isPresent()) {
-            return ResponseEntity.notFound().build();
-        }
         service.deleteById(id);
         return ResponseEntity.ok().build();
     }

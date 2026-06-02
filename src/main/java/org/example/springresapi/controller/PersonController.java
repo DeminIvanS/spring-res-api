@@ -27,9 +27,7 @@ public class PersonController {
 
     @GetMapping("/{id}")
     public String view(@PathVariable Long id, Model model) {
-        PersonDTO person = service.findById(id)
-                .orElse(null);
-        if (person == null) return "redirect:/persons";
+        PersonDTO person = service.findById(id);
         model.addAttribute("person", person);
         return "persons/view";
     }
@@ -50,9 +48,7 @@ public class PersonController {
 
     @GetMapping("/{id}/edit")
     public String editForm(@PathVariable Long id, Model model) {
-        PersonDTO person = service.findById(id)
-                .orElse(null);
-        if (person == null) return "redirect:/persons";
+        PersonDTO person = service.findById(id);
         model.addAttribute("person", person);
         return "persons/form";
     }
