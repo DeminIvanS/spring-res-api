@@ -9,11 +9,11 @@ public interface PersonService {
 
     List<PersonDTO> findAll();
 
-    Optional<PersonDTO> save(PersonDTO personDTO);
+    PersonDTO save(PersonDTO personDTO);
 
-    Optional<PersonDTO> findById(Long id);
+    PersonDTO findById(Long id);
 
-    Optional<PersonDTO> update(PersonDTO personDTO);
+    PersonDTO update(PersonDTO personDTO);
 
-    boolean deleteById(Long id);
+    void deleteById(Long id);
 }

@@ -1,5 +1,6 @@
 package org.example.springresapi.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.example.springresapi.dto.PersonDTO;
 import org.example.springresapi.entity.Person;
 import org.example.springresapi.repository.PersonRepository;
@@ -26,32 +27,32 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public Optional<PersonDTO> save(PersonDTO personDTO) {
+    public PersonDTO save(PersonDTO personDTO) {
         Person person = repository.save(new Person(personDTO.getName()));
-        return Optional.of(new PersonDTO(person.getId(), person.getName()));
+        return new PersonDTO(person.getId(), person.getName());
     }
 
     @Override
-    public Optional<PersonDTO> findById(Long id) {
+    public PersonDTO findById(Long id) {
         return repository.findById(id)
-                .map(person -> new PersonDTO(person.getId(), person.getName()));
+                .map(person -> new PersonDTO(person.getId(), person.getName()))
+                .orElseThrow(()-> new EntityNotFoundException("Person not found with id: " + id));
     }
 
     @Override
-    public Optional<PersonDTO> update(PersonDTO personDTO) {
-        if (findById(personDTO.getId()).isEmpty()) {
-            throw new RuntimeException();
+    public PersonDTO update(PersonDTO personDTO) {
+        if (!repository.existsById(personDTO.getId())) {
+            throw new EntityNotFoundException("Person not found with id: " + personDTO.getId());
         }
         Person person = repository.save(new Person(personDTO.getId(), personDTO.getName()));
-        return Optional.of(new PersonDTO(person.getId(), person.getName()));
+        return new PersonDTO(person.getId(), person.getName());
     }
 
     @Override
-    public boolean deleteById(Long id) {
-        if (findById(id).isEmpty()) {
-            return false;
+    public void deleteById(Long id) {
+        if (!repository.existsById(id)) {
+            throw new EntityNotFoundException("Person not found with id: " + id);
         }
         repository.deleteById(id);
-        return true;
     }
 }
